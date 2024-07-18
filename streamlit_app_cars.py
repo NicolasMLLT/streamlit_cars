@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 # Fonction pour filtrer par région
 def filter_by_region(data, region):
+    data['continent'] = data['continent'].str.strip()
     return data[data['continent'] == region]
 
 # Fonction pour tracer la matrice de corrélation
@@ -36,8 +37,12 @@ if uploaded_file is not None:
     st.write("Fichier chargé avec succès.")
     st.write(data.head())  # Afficher les premières lignes pour vérifier le contenu
 
+    # Vérifier les valeurs uniques de la colonne 'continent'
+    st.write("Valeurs uniques dans la colonne 'continent':")
+    st.write(data['continent'].unique())
+
     # Sélection de la région
-    region = st.selectbox("Sélectionnez la région", options=["US.", "Europe.", "Japan."])
+    region = st.selectbox("Sélectionnez la région", options=["US", "Europe", "Japan"])
 
     # Filtrage des données par région
     filtered_data = filter_by_region(data, region)
