@@ -13,10 +13,15 @@ def plot_correlation(data):
     if data.empty:
         st.write("Aucune donnée disponible pour cette région.")
     else:
-        corr = data.corr()
-        fig, ax = plt.subplots(figsize=(10, 8))
-        sns.heatmap(corr, annot=True, cmap='coolwarm', vmin=-1, vmax=1, ax=ax)
-        st.pyplot(fig)
+        # Sélectionner uniquement les colonnes numériques
+        numeric_data = data.select_dtypes(include='number')
+        if numeric_data.shape[1] < 2:
+            st.write("Pas assez de colonnes numériques pour afficher la corrélation.")
+        else:
+            corr = numeric_data.corr()
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(corr, annot=True, cmap='coolwarm', vmin=-1, vmax=1, ax=ax)
+            st.pyplot(fig)
 
 # Fonction pour tracer la distribution
 def plot_distribution(data, column):
