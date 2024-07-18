@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Fonction pour filtrer par région
 def filter_by_region(data, region):
     data['continent'] = data['continent'].str.strip()
-    return data[data['continent'] == region]
+    return data[data['continent'].str.contains(region, case=False, na=False)]
 
 # Fonction pour tracer la matrice de corrélation
 def plot_correlation(data):
